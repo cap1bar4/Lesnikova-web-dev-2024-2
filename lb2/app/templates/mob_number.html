@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Форма регистрации</h1>
+    <form method="POST">
+        <div class="col-md-4">
+            <label for="validationServer01" class="form-label">First name</label>
+            <input type="text" class="form-control {{input_cls}}" id="validationServer01" name="mobile_num" value="{{ request.form.get('mobile_num','') }}" required>
+            {% if input_cls == 'is-valid' %}
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            {% elif input_cls == 'is-invalid' %}
+                <div class="invalid-feedback">
+                    {{error}}
+                </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Проверить</button>
+    </form>
+
+    {% if text!='' %}
+        {{ mobile_num }}
+    {% endif %}
+
+{% endblock %}
