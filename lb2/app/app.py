@@ -57,6 +57,7 @@ def calc():
 
 @app.route("/mob_number", methods = ["POST", "GET"])
 def mob_number():
+    mobile_num = ''
     msg = ''
     error = ''
     num_of_num = ''
@@ -85,13 +86,13 @@ def mob_number():
         elif mobile_num[:2] == '+7' and count == 11:
             mobile_num = "8-{}-{}-{}-{}".format(num_of_num[1:4], num_of_num[4:7], num_of_num[7:9], num_of_num[9:])
             input_cls = 'is-valid'
-        elif mobile_num[:2] != '+7' and mobile_num[0] != '8' and count == 10:
+        elif mobile_num[:2] != '+7' and count == 10:
             mobile_num = "8-{}-{}-{}-{}".format(num_of_num[0:3], num_of_num[3:6], num_of_num[6:8], num_of_num[8:])
             input_cls = 'is-valid'
         else:
             error = 'Недопустимый ввод. Неверное количество цифр.'
             input_cls = 'is-invalid'
-    print(mobile_num, error, input_cls, count)
+
     return render_template("mob_number.html", mobile_num = mobile_num, error = error, input_cls = input_cls)
 
     
