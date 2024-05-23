@@ -48,6 +48,7 @@ def posts():
 
 @app.route('/posts/<int:post_index>')
 def post(post_index):
+    print(posts_list[post_index])
     return render_template('post.html', post=posts_list[post_index])
 
 @app.route('/about')

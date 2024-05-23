@@ -1,47 +1,59 @@
 {% extends 'base.html' %}
 
-{% block content %}  
-<div class="m-4 row form-floating">
+{% block content %}
+<div class="container mt-4">
 
-    <div class="mb-4 mx-4 col-12">
-        <h2 class="card-title">{{ post['title'] }}</h2>
+    <div class="mb-4">
+        <h2 class="card-title">{{ post.title }}</h2>
         {{ post.author }},
         {{ post.date.strftime('%d.%m.%Y') }}
     </div>
-        
 
-    <div class="m-4 col-12 text-center">
-        <img src="{{ url_for('static', filename='images/' + post.image_filename)}}" class="card-img-top w-50" alt="картинка">
-        <p class="card-text mt-4">{{ post.text}}</p>
+    <div class="text-center mb-4">
+        <img src="{{ url_for('static', filename='images/' + post.image_filename) }}" class="card-img-top w-50" alt="картинка">
+        <p class="card-text mt-4">{{ post.text }}</p>
     </div>
-    
-    <form class="m-4 row g-6">
-        <div class="col-md-12">
-        <label for="inputEmail4" class="form-label m-2">Оставить комментарий</label>
-        <input type="email" class="form-control m-2 mb-4" id="inputEmail4">
-        </div> 
-        <div class="col-12">
-        <button type="submit" class="btn btn-info m-2">Отправить</button>
+
+    <form class="mb-4">
+        <div class="mb-3">
+            <label for="inputEmail" class="form-label">Оставить комментарий</label>
+            <input type="email" class="form-control" id="inputEmail">
         </div>
+        <button type="submit" class="btn btn-info">Отправить</button>
     </form>
-    
-    <div class="m-4 row form-floating">
-        <div class="col-md-6">
-            {% for comment in post.comments %}
-                <div class="row mb-2">
-                    <div class="col-md-1">
+
+    <div class="comments-section">
+        {% for comment in post.comments %}
+            <div class="comment mb-3">
+                <div class="d-flex align-items-start">
+                    <div class="flex-shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
                         </svg>
                     </div>
-                    <div class="col-md-6">
-                        <div class="fw-bold user-name">{{ comment.author }}</div>
-                        <div class="user-comment">{{ comment.text }}</div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="fw-bold">{{ comment.author }}</div>
+                        <div>{{ comment.text }}</div>
+                    </div>
+                </div>
+
+            {% for reply in comment.replies %}
+                <div class="reply ms-5 mt-2">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <div class="fw-bold">{{ reply.author }}</div>
+                            <div>{{ reply.text }}</div>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
-        </div>
-    </div>    
+            </div>
+        {% endfor %}
+    </div>
 </div>
-
 {% endblock %}
